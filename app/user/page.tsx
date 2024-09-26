@@ -1,9 +1,13 @@
+import Link from "next/link"
 import UserFile from "./UserFile"
-const userPage = async () => {
+
+interface Props {
+  searchParams: { sortOrder: string }
+}
+const userPage = ({ searchParams: { sortOrder } }: Props) => {
   return (
     <div>
-      <h2>users</h2>
-      <UserFile />
+      <UserFile sortOrder={sortOrder} />
     </div>
   )
 }
