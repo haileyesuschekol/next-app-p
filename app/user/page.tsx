@@ -7,6 +7,8 @@ interface Props {
 const userPage = ({ searchParams: { sortOrder } }: Props) => {
   return (
     <div>
+      <Link href="/user/new">Create</Link>
+      <br />
       <UserFile sortOrder={sortOrder} />
     </div>
   )
