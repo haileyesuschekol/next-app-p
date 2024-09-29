@@ -31,6 +31,7 @@ export async function PUT(request: NextRequest, { params: { id } }: UserId) {
 
 //delete
 export function DELETE(request: NextRequest, { params: { id } }: UserId) {
-  if (id > 10) NextResponse.json({ error: "user not found" }, { status: 404 })
-  NextResponse.json({ name: "deleted" })
+  if (id > 10)
+    return NextResponse.json({ error: "user not found" }, { status: 404 })
+  return NextResponse.json({ message: "deleted" })
 }
