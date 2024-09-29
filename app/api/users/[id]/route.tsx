@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server"
 interface UserId {
   params: { id: number }
 }
-
+//get
 export function GET(request: NextRequest, { params: { id } }: UserId) {
   if (id > 10)
     return NextResponse.json({ error: "user not found" }, { status: 404 })
@@ -14,7 +14,7 @@ export function GET(request: NextRequest, { params: { id } }: UserId) {
     name: "john",
   })
 }
-
+//post
 export async function POST(request: NextRequest) {
   const body = await request.json()
   if (!body.name) {
@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
+//put
 export async function PUT(request: NextRequest, { params: { id } }: UserId) {
   const body = await request.json()
 
@@ -33,4 +34,10 @@ export async function PUT(request: NextRequest, { params: { id } }: UserId) {
   if (id > 10)
     return NextResponse.json({ error: "invalid id" }, { status: 404 })
   return NextResponse.json({ id: 1, name: body.name }, { status: 201 })
+}
+
+//delete
+export function DELETE(request: NextRequest, { params: { id } }: UserId) {
+  if (id > 10) NextResponse.json({ error: "user not found" }, { status: 404 })
+  NextResponse.json({})
 }
