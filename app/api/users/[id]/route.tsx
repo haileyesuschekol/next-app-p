@@ -1,7 +1,7 @@
 import { error } from "console"
 import { stat } from "fs"
 import { NextRequest, NextResponse } from "next/server"
-
+import schema from "../schema"
 interface UserId {
   params: { id: number }
 }
@@ -14,22 +14,15 @@ export function GET(request: NextRequest, { params: { id } }: UserId) {
     name: "john",
   })
 }
-//post
-export async function POST(request: NextRequest) {
-  const body = await request.json()
-  if (!body.name) {
-    return NextResponse.json({ error: "name is require" }, { status: 400 })
-  } else {
-    return NextResponse.json({ id: 3, name: body.name }, { status: 201 })
-  }
-}
 
 //put
+
 export async function PUT(request: NextRequest, { params: { id } }: UserId) {
   const body = await request.json()
+  const validation = schema.safeParse(body)
 
-  if (!body.name)
-    return NextResponse.json({ error: "name is required" }, { status: 400 })
+  if (!validation.success)
+    return NextResponse.json(validation.error.errors, { status: 400 })
 
   if (id > 10)
     return NextResponse.json({ error: "invalid id" }, { status: 404 })
@@ -39,5 +32,5 @@ export async function PUT(request: NextRequest, { params: { id } }: UserId) {
 //delete
 export function DELETE(request: NextRequest, { params: { id } }: UserId) {
   if (id > 10) NextResponse.json({ error: "user not found" }, { status: 404 })
-  NextResponse.json({})
+  NextResponse.json({ name: "deleted" })
 }
